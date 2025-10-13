@@ -1,0 +1,272 @@
+[
+  {
+    "id": "event_001",
+    "title": "AI & Ethics Seminar",
+    "dueDate": "2025-10-18",
+    "duration": 90,
+    "tag": "Seminar",
+    "createdAt": "2025-09-10T09:00:00Z",
+    "updatedAt": "2025-09-10T09:00:00Z"
+  },
+  {
+    "id": "event_002",
+    "title": "ALU Toastmasters Club Meeting",
+    "dueDate": "2025-10-19",
+    "duration": 60,
+    "tag": "Club-Meeting",
+    "createdAt": "2025-09-11T10:30:00Z",
+    "updatedAt": "2025-09-11T10:30:00Z"
+  },
+  {
+    "id": "event_003",
+    "title": "Career Fair Prep Workshop",
+    "dueDate": "2025-10-20",
+    "duration": 120,
+    "tag": "Workshop",
+    "createdAt": "2025-09-12T14:00:00Z",
+    "updatedAt": "2025-09-12T14:00:00Z"
+  },
+  {
+    "id": "event_004",
+    "title": "Guest Speaker: Entrepreneurship in Africa",
+    "dueDate": "2025-10-21",
+    "duration": 75,
+    "tag": "Talk",
+    "createdAt": "2025-09-13T11:15:00Z",
+    "updatedAt": "2025-09-13T11:15:00Z"
+  },
+  {
+    "id": "event_005",
+    "title": "Yoga & Mindfulness Session",
+    "dueDate": "2025-10-22",
+    "duration": 45,
+    "tag": "Wellness",
+    "createdAt": "2025-09-14T16:00:00Z",
+    "updatedAt": "2025-09-14T16:00:00Z"
+  },
+  {
+    "id": "event_006",
+    "title": "Coding Club Hackathon Kick-off",
+    "dueDate": "2025-10-23",
+    "duration": 180,
+    "tag": "Club-Event",
+    "createdAt": "2025-09-15T09:30:00Z",
+    "updatedAt": "2025-09-15T09:30:00Z"
+  },
+  {
+    "id": "event_007",
+    "title": "Sustainable Development Goals Discussion",
+    "dueDate": "2025-10-24",
+    "duration": 60,
+    "tag": "Discussion",
+    "createdAt": "2025-09-16T13:00:00Z",
+    "updatedAt": "2025-09-16T13:00:00Z"
+  },
+  {
+    "id": "event_008",
+    "title": "Photography Club Photo Walk",
+    "dueDate": "2025-10-25",
+    "duration": 150,
+    "tag": "Club-Event",
+    "createdAt": "2025-09-17T08:00:00Z",
+    "updatedAt": "2025-09-17T08:00:00Z"
+  },
+  {
+    "id": "event_009",
+    "title": "Data Science Project Presentation",
+    "dueDate": "2025-10-26",
+    "duration": 120,
+    "tag": "Seminar",
+    "createdAt": "2025-09-18T10:00:00Z",
+    "updatedAt": "2025-09-18T10:00:00Z"
+  },
+  {
+    "id": "event_010",
+    "title": "Debate Club Weekly Session",
+    "dueDate": "2025-10-27",
+    "duration": 90,
+    "tag": "Club-Meeting",
+    "createdAt": "2025-09-19T17:00:00Z",
+    "updatedAt": "2025-09-19T17:00:00Z"
+  },
+  {
+    "id": "event_011",
+    "title": "Financial Literacy Workshop",
+    "dueDate": "2025-10-28",
+    "duration": 120,
+    "tag": "Workshop",
+    "createdAt": "2025-09-20T11:00:00Z",
+    "updatedAt": "2025-09-20T11:00:00Z"
+  },
+  {
+    "id": "event_012",
+    "title": "Mental Health Awareness Talk",
+    "dueDate": "2025-10-29",
+    "duration": 60,
+    "tag": "Talk",
+    "createdAt": "2025-09-21T14:30:00Z",
+    "updatedAt": "2025-09-21T14:30:00Z"
+  },
+  {
+    "id": "event_013",
+    "title": "Chess Club Tournament",
+    "dueDate": "2025-10-30",
+    "duration": 240,
+    "tag": "Club-Event",
+    "createdAt": "2025-09-22T10:00:00Z",
+    "updatedAt": "2025-09-22T10:00:00Z"
+  },
+  {
+    "id": "event_014",
+    "title": "Entrepreneurship Club Pitch Practice",
+    "dueDate": "2025-10-31",
+    "duration": 90,
+    "tag": "Club-Meeting",
+    "createdAt": "2025-09-23T16:00:00Z",
+    "updatedAt": "2025-09-23T16:00:00Z"
+  },
+  {
+    "id": "event_015",
+    "title": "Movie Night: African Cinema",
+    "dueDate": "2025-11-01",
+    "duration": 180,
+    "tag": "Social",
+    "createdAt": "2025-09-24T19:00:00Z",
+    "updatedAt": "2025-09-24T19:00:00Z"
+  },
+  {
+    "id": "event_016",
+    "title": "Student Government Elections Town Hall",
+    "dueDate": "2025-11-02",
+    "duration": 90,
+    "tag": "Campus-Event",
+    "createdAt": "2025-09-25T15:00:00Z",
+    "updatedAt": "2025-09-25T15:00:00Z"
+  },
+  {
+    "id": "event_017",
+    "title": "Web Development Basics Workshop",
+    "dueDate": "2025-11-03",
+    "duration": 150,
+    "tag": "Workshop",
+    "createdAt": "2025-09-26T09:00:00Z",
+    "updatedAt": "2025-09-26T09:00:00Z"
+  },
+  {
+    "id": "event_018",
+    "title": "Book Club: 'Things Fall Apart' Discussion",
+    "dueDate": "2025-11-04",
+    "duration": 60,
+    "tag": "Club-Meeting",
+    "createdAt": "2025-09-27T18:00:00Z",
+    "updatedAt": "2025-09-27T18:00:00Z"
+  },
+  {
+    "id": "event_019",
+    "title": "Campus Cleanup Day",
+    "dueDate": "2025-11-05",
+    "duration": 120,
+    "tag": "Volunteer",
+    "createdAt": "2025-09-28T09:00:00Z",
+    "updatedAt": "2025-09-28T09:00:00Z"
+  },
+  {
+    "id": "event_020",
+    "title": "Intro to Machine Learning Seminar",
+    "dueDate": "2025-11-06",
+    "duration": 120,
+    "tag": "Seminar",
+    "createdAt": "2025-09-29T10:00:00Z",
+    "updatedAt": "2025-09-29T10:00:00Z"
+  },
+  {
+    "id": "event_021",
+    "title": "Startup Weekend Ideation Session",
+    "dueDate": "2025-11-07",
+    "duration": 90,
+    "tag": "Club-Event",
+    "createdAt": "2025-09-30T17:00:00Z",
+    "updatedAt": "2025-09-30T17:00:00Z"
+  },
+  {
+    "id": "event_022",
+    "title": "Research Paper Writing Workshop",
+    "dueDate": "2025-11-08",
+    "duration": 180,
+    "tag": "Workshop",
+    "createdAt": "2025-10-01T13:00:00Z",
+    "updatedAt": "2025-10-01T13:00:00Z"
+  },
+  {
+    "id": "event_023",
+    "title": "Fitness Club Zumba Class",
+    "dueDate": "2025-11-09",
+    "duration": 60,
+    "tag": "Wellness",
+    "createdAt": "2025-10-02T16:00:00Z",
+    "updatedAt": "2025-10-02T16:00:00Z"
+  },
+  {
+    "id": "event_024",
+    "title": "Guest Lecturer: Climate Change Solutions",
+    "dueDate": "2025-11-10",
+    "duration": 75,
+    "tag": "Talk",
+    "createdAt": "2025-10-03T11:00:00Z",
+    "updatedAt": "2025-10-03T11:00:00Z"
+  },
+  {
+    "id": "event_025",
+    "title": "Art & Design Club Open Studio",
+    "dueDate": "2025-11-11",
+    "duration": 120,
+    "tag": "Club-Event",
+    "createdAt": "2025-10-04T14:00:00Z",
+    "updatedAt": "2025-10-04T14:00:00Z"
+  },
+  {
+    "id": "event_026",
+    "title": "Peer Mentoring Program Info Session",
+    "dueDate": "2025-11-12",
+    "duration": 60,
+    "tag": "Campus-Event",
+    "createdAt": "2025-10-05T10:00:00Z",
+    "updatedAt": "2025-10-05T10:00:00Z"
+  },
+  {
+    "id": "event_027",
+    "title": "Public Speaking Masterclass",
+    "dueDate": "2025-11-13",
+    "duration": 150,
+    "tag": "Workshop",
+    "createdAt": "2025-10-06T09:30:00Z",
+    "updatedAt": "2025-10-06T09:30:00Z"
+  },
+  {
+    "id": "event_028",
+    "title": "Game Development Club Meetup",
+    "dueDate": "2025-11-14",
+    "duration": 90,
+    "tag": "Club-Meeting",
+    "createdAt": "2025-10-07T18:00:00Z",
+    "updatedAt": "2025-10-07T18:00:00Z"
+  },
+  {
+    "id": "event_029",
+    "title": "Diversity & Inclusion Panel Discussion",
+    "dueDate": "2025-11-15",
+    "duration": 120,
+    "tag": "Discussion",
+    "createdAt": "2025-10-08T14:00:00Z",
+    "updatedAt": "2025-10-08T14:00:00Z"
+  },
+  {
+    "id": "event_030",
+    "title": "Student Talent Show Auditions",
+    "dueDate": "2025-11-16",
+    "duration": 180,
+    "tag": "Social",
+    "createdAt": "2025-10-09T10:00:00Z",
+    "updatedAt": "2025-10-09T10:00:00Z"
+  }
+]

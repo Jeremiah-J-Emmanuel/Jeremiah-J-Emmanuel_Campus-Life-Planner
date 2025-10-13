@@ -1,0 +1,102 @@
+
+/*The CSS rules below are used to hide the label element of the search form.
+I did not make use of {display: none} because that would make the label inaccesible
+to screen readers*/
+
+.sr-only {
+  border: 0;
+  clip-path: inset(50%); /*This is used to cut (inset) all corners by
+  50% which will then vanish the element*/
+  clip: rect(0 0 0 0); /* This is used for older versions of browsers, so that the vanishing effect
+  can still work*/
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden; /* hide the excess overflowing content*/
+  position: absolute; /*To take it out of normal flow withh the other elements on the page*/
+  white-space: nowrap; /*To prevent the excess content from moving to the next line*/
+}
+
+
+/*Light Mode- Default */
+:root {
+    --color-background: #F0F0F5;
+    --color-text: #060606;       /* Dark Gray/Black */
+    --color-primary: #007AFF;    /* Blue for accents/buttons */
+    --color-card-bg: #FFFFFF;    /* Light Gray for cards */
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-header: #003860;
+    --color-tag:  #ceedfc;
+    --color-tag-text: #0a48b3;
+    --color-footer: #FFFFFF;
+}
+
+/* Dark Mode-  To be turned on only when the user selects dark mode*/
+body.dark-theme {
+    --color-background: #121212; /* Dark Gray/Black */
+    --color-text: #EAEAEA;       /* Off-White */
+    --color-primary: #4DAFFF;    /* Lighter Blue */
+    --color-card-bg: #1F1F1F;    /* Darker background for cards (like in your image) */
+    --color-shadow: rgba(255, 255, 255, 0.1);
+    --color-header: #000000;
+    --color-tag: #000000;
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: background-color 0.3s, color 0.3s; /* B. CSS & Responsiveness: Tasteful transition */
+    font-family: 'Roboto', 'Inter', 'Helvetica Neue', sans-serif;
+}
+
+header {
+    background-color: var(--color-header);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 75px;
+    color: #FFFFFF;
+    text-align: center;
+    align-content: center;
+    
+}
+#search-bar {
+    height: 40px;
+    width: 360px;
+    border-radius: 15px;
+    text-align: right;
+}
+
+.search-icon {
+    position: absolute;
+    left: 0;
+}
+
+.event-card {
+    background-color: var(--color-card-bg);
+    box-shadow: 0 2px 5px var(--color-shadow);
+    height: fit-content;
+    width: auto;
+    padding: 10px;
+    margin: 10 px;
+    border: 15px;
+    border-radius: 15px;
+}
+
+article > span {
+    display: inline-block;
+    width: fit-content;
+    background-color: var(--color-tag);
+    border-radius: 15px;
+    padding: 6px 10px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    color: var(--color-tag-text)
+}
+
+footer {
+    background-color: var(--color-footer);
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
