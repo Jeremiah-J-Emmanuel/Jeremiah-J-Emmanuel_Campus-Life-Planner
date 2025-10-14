@@ -4,7 +4,7 @@
     <title>Campus Life Planner</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="styles-index.css" rel="stylesheet">
+    <link href="./css/styles-index.css" rel="stylesheet">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
             <!--sr-only stands for Screen Reader only-->
             <input type="search" id="search-bar"
             placeholder="Search events by title, tag, due or created date">
-            <img class="search-icon" src="./images/search-icon.png" alt="search icon image" height="40px" width="40px">
+            <img class="search-icon" src="./images/search.png" alt="search icon image" height="40px" width="40px">
             <!--Add an aria controls attribute later-->
         </div>
         </form>
@@ -37,6 +37,10 @@
         <p><strong>Duration</strong>: 90 mins</p>
         <span>#Seminar</span> <span>#Technology</span> <span>#Ethics</span>
         <!--I made use of span because it is what is most suitable for hashtags and tags-->
+        <div class="actions">
+            <button class="edit">Edit</button>
+            <button class="delete"><img src="./images/dustbin.png" alt="delete icon" height="20px" width="20px"></button>
+        </div>
     </article><br>
 
     <article class="event-card">
@@ -44,6 +48,10 @@
         <p><strong>Due</strong>: 2025-10-19</p>
         <p><strong>Duration</strong>: 60 mins</p>
         <span>#Club-Meeting</span> <span>#Public-Speaking</span>
+        <div class="actions">
+            <button class="edit">Edit</button>
+            <button class="delete"><img src="./images/dustbin.png" alt="delete icon" height="20px" width="20px"></button>
+        </div>
     </article><br>
 
     <article class="event-card">
@@ -51,6 +59,10 @@
         <p><strong>Due</strong>: 2025-10-20</p>
         <p><strong>Duration</strong>: 120 mins</p>
         <span>#Workshop</span> <span>#Career</span> <span>#Professional-Dev</span>
+        <div class="actions">
+            <button class="edit">Edit</button>
+            <button class="delete"><img src="./images/dustbin.png" alt="delete icon" height="20px" width="20px"></button>
+        </div>
     </article> <br>
 
     <article class="event-card">
@@ -58,41 +70,43 @@
         <p><strong>Due</strong>: 2025-10-21</p>
         <p><strong>Duration</strong>: 75 mins</p>
         <span>#Talk</span>
+        <div class="actions">
+            <button class="edit">Edit</button>
+            <button class="delete"><img src="./images/dustbin.png" alt="delete icon" height="20px" width="20px"></button>
+        </div>
     </article><br>
 
     </main>
 
     <footer>
         <nav aria-label="App Navigation">
-        <ul>
+        <ul class="navbar">
             <li>
-                <a href="./dashboard.html" aria-label="dashboard">
-                    <img src="" alt="dashboard button icon" height="40px" width="40px">
+                <a href="./dashboard.html" aria-label="Dashboard">
+                    <img src="./images/home.png" alt="dashboard button icon" height="25px" width="25px">
                 </a>
             </li>
         
             <li>
-               <a href="./events.html" aria-label="dashboard">
-                    <img src="" alt="events page button icon" height="40px" width="40px">
+               <a href="./events.html" aria-label="See events list">
+                    <img src="./images/calendar.png" alt="events page button icon" height="25px" width="25px">
                 </a>
             </li>
 
             <li>
-                
+                <button aria-label="Add new event" class="add-event">+</button>
             </li>
 
             <li>
-                <a href="./about.html" aria-label="dashboard">
-                    <img src="" alt="about page button icon" height="40px" width="40px">
+                <a href="./about.html" aria-label="About">
+                    <img src="./images/information.png" alt="about page button icon" height="25px" width="25px">
                 </a>
             </li>
 
             <li>
-                <a href="./settings.html" aria-label="dashboard">
-                    <img src="" alt="settings button icon" height="40px" width="40px">
+                <a href="./settings.html" aria-label="Settings">
+                    <img src="./images/settings (2).png" alt="settings button icon" height="25px" width="25px">
                 </a>
-
-                
             </li>
 
         </ul>
@@ -102,4 +116,4 @@
     </footer>
 </body>
 
-</html
+</html>
