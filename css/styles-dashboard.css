@@ -99,6 +99,14 @@ alu-logo{
 
 } 
 
+.alu-logo {
+    display: none;
+}
+
+figcaption {
+    display: none;
+}
+
 .add-event { /*This is the add event button*/
     /*The container is made a flex container to enable centralization of the icon*/
     display: flex;
@@ -137,6 +145,14 @@ footer {
         justify-content: flex-start;
     }
 
+
+    .alu-logo {
+    display: block;
+}
+
+    figcaption {
+    display: block;
+}
     main, header, footer {
         margin-left: 90px;
         width: auto;
@@ -147,9 +163,10 @@ footer {
         margin-top: 30px;
         display: block;
     }
-     
-    .li-remove {
-        display: none;
+
+    .add-event {
+        margin-top: 20px;
+        margin-bottom: 0px;
     }
 
        .nav-icon {

@@ -126,14 +126,14 @@ color: var(--color-tag-text);
 }
 .navbar{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     list-style-type: none;
     background-color: var(--color-nav-bar);
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
+    right: 0;
     z-index: 100;
     padding-left: 0;
     padding-right: 0;
@@ -141,11 +141,10 @@ color: var(--color-tag-text);
     padding-bottom: 10px;
     border-radius: 10px;
     margin: 0;
-
 } 
 
- li {
-    wid;
+figcaption {
+    display: none;
 }
 
 
@@ -165,12 +164,7 @@ color: var(--color-tag-text);
     background-color: #33b58c;
     color: #FFFFFF;
 }
-footer {
-    background-color: var(--color-footer);
-    text-align: center;
-    padding-bottom: 10px;
 
-}
 
 .delete{ /*This is for the delete button*/
     display: flex;
@@ -209,6 +203,13 @@ footer {
   gap: 12px;
 }
 
+footer {
+    background-color: var(--color-footer);
+    text-align: center;
+    padding-bottom: 10px;
+
+}
+
 /*Media Query for the Tablet Screen*/
 @media (min-width: 768px) {
     .navbar {
@@ -222,6 +223,9 @@ footer {
         justify-content: flex-start;
     }
 
+    figcaption {
+    display: block;
+}
     main, header, footer {
         margin-left: 90px;
         width: auto;
