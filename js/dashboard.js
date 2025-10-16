@@ -1,282 +1,204 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const timeTracker = document.getElementById('bar-time-tracker');
+document.addEventListener('DOMContentLoaded', async function() {
+  const STORAGE_KEY = 'campus:events';
+  const SETTINGS_KEY = 'campus:settings';
+  const WEEKDAY_LABELS = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
 
-    var XValues = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
-    var yValues = [7, 5, 8, 7, 5, 8, 2];
-    var barColors =  ["#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff"];
+  async function loadRecords() {
+    let data = [];
+    try {
+      data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch { data = []; }
 
-    new Chart(timeTracker, {
-        type: 'bar',
+    if (!Array.isArray(data) || data.length === 0) {
+      try {
+        const res = await fetch('./seed.json');
+        data = await res.json();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {
+        console.error('Failed to load seed.json', e);
+        data = [];
+      }
+    }
+    return data;
+  }
 
-        data: {
-            labels: XValues,
-            datasets : [{
-                label: 'Hours Spent on Events Daily', // Add a label for the dataset
-                backgroundColor: barColors,
-                data: yValues
-            }]
+  function loadSettings() {
+    try {
+      const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+      return { weeklyCapMinutes: typeof s.weeklyCapMinutes === 'number' ? s.weeklyCapMinutes : 600 };
+    } catch {
+      return { weeklyCapMinutes: 600 };
+    }
+  }
+
+  const records = await loadRecords();
+  const settings = loadSettings();
+
+  function weekdayIndexMonFirst(dateStr) {
+    const d = new Date(dateStr);
+    const day = d.getDay();
+    return day === 0 ? 6 : day - 1;
+  }
+
+  function minutesToHoursArray(minsArr) {
+    return minsArr.map(m => +(m / 60).toFixed(2));
+  }
+
+  const minutesPerWeekday = Array(7).fill(0);
+  records.forEach(r => {
+    if (!r.dueDate || typeof r.duration !== 'number') return;
+    const idx = weekdayIndexMonFirst(r.dueDate);
+    minutesPerWeekday[idx] += r.duration;
+  });
+  const hoursPerWeekday = minutesToHoursArray(minutesPerWeekday);
+
+  const tagMinutes = new Map();
+  records.forEach(r => {
+    const eventTags = Array.isArray(r.tags) ? r.tags : (r.tag ? [r.tag] : []);
+    const dur = typeof r.duration === 'number' ? r.duration : 0;
+    eventTags.forEach(t => {
+      const key = String(t);
+      tagMinutes.set(key, (tagMinutes.get(key) || 0) + dur);
+    });
+  });
+
+  const topTagEntries = [...tagMinutes.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
+
+  const tagLabels = topTagEntries.map(([t]) => t);
+  const tagHours  = topTagEntries.map(([, m]) => +(m / 60).toFixed(2));
+
+  const totalMinutesUsed = records.reduce((sum, r) => sum + (typeof r.duration === 'number' ? r.duration : 0), 0);
+  const cap = settings.weeklyCapMinutes;
+  const remaining = Math.max(cap - totalMinutesUsed, 0);
+  const usedHours = +(totalMinutesUsed / 60).toFixed(2);
+  const remainingHours = +(remaining / 60).toFixed(2);
+
+  const BAR_COLOR = '#3c4f6bff';
+  const BAR_GRID_COLOR = 'rgba(0,0,0,0.1)';
+  const DONUT_COLORS = ['#3c4f6bff', '#55b1bdff'];
+  const DONUT_BORDERS = ['#aec4e6ff', '#c5d8daff'];
+
+  (function () {
+    const ctx = document.getElementById('bar-time-tracker').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: WEEKDAY_LABELS,
+        datasets: [{
+          label: 'Hours Spent on Events Daily',
+          backgroundColor: BAR_COLOR,
+          data: hoursPerWeekday
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Hours Spent on Events Daily',
+          fontSize: 16,
+          fontStyle: 'bold'
         },
-
-        options: {
-            responsive: true, 
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-
-                title: {
-                    display: true,
-                    text: 'Hours Spent on Events Daily', 
-                    font: {size: 16, weight: 'bold'},
-                    padding: {bottom: 15}
-                },
-                
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    titleFont: { size: 14 },
-                    bodyFont: { size: 14 },
-                    displayColors: false, 
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y + ' Hrs';
-                        } 
-                    } 
-                }
-            },
-            
-            scales: {
-                x: {
-                    grid: {
-                        display: false  // This is to make sure that only horizontal lines are shown
-                    },
-                    title: {
-                        display: true,
-                        text: 'Day of Week'
-                    }
-                },
-
-                y: {
-                    beginAtZero: true, 
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)',
-                        borderDash: [5, 5] 
-                    }, 
-
-                    title: {
-                        display: true,
-                        text: 'Hours'
-                    },
-                    
-                    ticks: {
-                        stepSize: 1,
-                        callback: function(value) {
-                            return value % 1 === 0 ? value : ''; 
-                        }  
-                    }
-                }
+        tooltips: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          displayColors: false,
+          callbacks: {
+            label: function (tooltipItem, data) {
+              const val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+              return 'Hours: ' + val + ' Hrs';
             }
-        }
-    });
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    const timePerTag = document.getElementById('bar-time-per-tag');
-    var yValues = ['AI', 'Ethics', 'Seminar', 'Club'];
-    var xValues = [7, 5, 8, 7];
-    var barColors =  ["#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff"];
-
-    new Chart(timePerTag, {
-        type: "bar",
-        data: {
-            labels: yValues,
-            datasets: [{
-                label: "Top four tags and thier hours",
-                data: xValues,
-                backgroundColor: barColors
-            }]
+          }
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: 'y', //This is to make the bar horizontal
-            plugins: {
-                legend: {display: false},
+        scales: {
+          xAxes: [{
+            gridLines: { display: false },
+            scaleLabel: { display: true, labelString: 'Day of Week' }
+          }],
+          yAxes: [{
+            ticks: { beginAtZero: true, stepSize: 1 },
+            gridLines: { color: BAR_GRID_COLOR, borderDash: [5, 5] },
+            scaleLabel: { display: true, labelString: 'Hours' }
+          }]
+        }
+      }
+    });
+  })();
 
-                title: {
-                    display: true,
-                    text: "Hours spent by Tag",
-                    font: {size: 16, weight: 'bold'},
-                    padding: {bottom: 15}
-                },
-
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    titleFont: { size: 14 },
-                    bodyFont: { size: 14 },
-                    displayColors: false, 
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y + ' Hrs';
-                        } 
-                    } 
-                }
-            },
-              
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    },
-
-                    title: {
-                        display:true,
-                        text: "tag"
-                    },
-
-                    beginAtZero: true
-                },
-
-                y: {
-                    beginAtZero: true, 
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)',
-                        borderDash: [5, 5] 
-                    }, 
-
-                    title: {
-                        display: true,
-                        text: 'Hours'
-                    },
-                    
-                    ticks: {
-                        stepSize: 1,
-                        callback: function(value) {
-                            return value % 1 === 0 ? value : ''; 
-                        }
-                    }
-                }
-
-                
+  (function () {
+    const ctx = document.getElementById('bar-time-per-tag').getContext('2d');
+    new Chart(ctx, {
+      type: 'horizontalBar',
+      data: {
+        labels: tagLabels,
+        datasets: [{
+          label: 'Hours by Tag',
+          data: tagHours,
+          backgroundColor: BAR_COLOR
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Hours Spent by Tag',
+          fontSize: 16,
+          fontStyle: 'bold'
+        },
+        tooltips: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          displayColors: false,
+          callbacks: {
+            label: function (tooltipItem, data) {
+              const val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+              return 'Hours: ' + val + ' Hrs';
             }
-        }
-    });
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    const timeTracker = document.getElementById('donot-time-percentage');
-
-    var XValues = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
-    var yValues = [7, 5, 8, 7, 5, 8, 2];
-    var barColors =  ["#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff", "#3c4f6bff"];
-
-    new Chart(timeTracker, {
-        type: 'bar',
-
-        data: {
-            labels: XValues,
-            datasets : [{
-                label: 'Hours Spent on Events Daily', // Add a label for the dataset
-                backgroundColor: barColors,
-                data: yValues
-            }]
+          }
         },
-
-        options: {
-            responsive: true, 
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-
-                title: {
-                    display: true,
-                    text: 'Hours Spent on Events Daily', 
-                    font: {size: 16, weight: 'bold'},
-                    padding: {bottom: 15}
-                },
-                
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    titleFont: { size: 14 },
-                    bodyFont: { size: 14 },
-                    displayColors: false, 
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y + ' Hrs';
-                        } 
-                    } 
-                }
-            },
-            
-            scales: {
-                x: {
-                    grid: {
-                        display: false  // This is to make sure that only horizontal lines are shown
-                    },
-                    title: {
-                        display: true,
-                        text: 'Day of Week'
-                    }
-                },
-
-                y: {
-                    beginAtZero: true, 
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)',
-                        borderDash: [5, 5] 
-                    }, 
-
-                    title: {
-                        display: true,
-                        text: 'Hours'
-                    },
-                    
-                    ticks: {
-                        stepSize: 1,
-                        callback: function(value) {
-                            return value % 1 === 0 ? value : ''; 
-                        }  
-                    }
-                }
-            }
+        scales: {
+          xAxes: [{
+            ticks: { beginAtZero: true, stepSize: 1 },
+            gridLines: { display: false },
+            scaleLabel: { display: true, labelString: 'Hours' }
+          }],
+          yAxes: [{
+            gridLines: { color: BAR_GRID_COLOR, borderDash: [5, 5] },
+            scaleLabel: { display: true, labelString: 'Tag' }
+          }]
         }
+      }
     });
-});
+  })();
 
+  (function () {
+    const canvas = document.getElementById('donut-time-percentage');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
-document.addEventListener('DOMContentLoaded', function() {
-    const donutTimePercentage = document.getElementById('donut-time-percentage').getContext('2d');
-
-    new Chart(donutTimePercentage, {
-        type: 'doughnut',
-        data: {
-            labels: ['Used', 'Remaining'],
-            datasets: [{
-                label: '# of Votes',
-                data: [81, 19],
-                backgroundColor: [
-                    '#3c4f6bff',
-                    '#55b1bdff'
-                ],
-                borderColor: [
-                    '#aec4e6ff',
-                    '#c5d8daff'
-                ],
-                borderWidth: 1
-            }]
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Used', 'Remaining'],
+        datasets: [{
+          data: [usedHours, remainingHours],
+          backgroundColor: DONUT_COLORS,
+          borderColor: DONUT_BORDERS,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        legend: { position: 'top' },
+        title: {
+          display: true,
+          text: 'Percentage of Time Used (Weekly Cap)'
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Percentage of Time used up'
-                }
-            },
-            cutout: '70%' 
-        }
+        cutoutPercentage: 70
+      }
     });
+  })();
 });

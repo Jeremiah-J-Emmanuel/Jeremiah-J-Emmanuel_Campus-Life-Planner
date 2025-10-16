@@ -72,7 +72,7 @@ article > strong{
 }
 
 #donut-time-percentage {
-    /*This is the canvas item for the donut chart chart.*/
+    /*This is the canvas item for the donut chart.*/
     margin-top: 20px;
 }
 
@@ -157,6 +157,8 @@ footer {
         width: 50px;
         margin-top: 30px;
     }
+
+
 
     footer {
         margin: 0;

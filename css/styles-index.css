@@ -22,9 +22,9 @@ to screen readers*/
 /*Light Mode- Default */
 :root {
     --color-background: #F0F0F5;
-    --color-text: #060606;       /* Dark Gray/Black */
-    --color-primary: #007AFF;    /* Blue for accents/buttons */
-    --color-card-bg: #FFFFFF;    /* Light Gray for cards */
+    --color-text: #060606;      
+    --color-primary: #007AFF;    
+    --color-card-bg: #FFFFFF;    
     --color-shadow: rgba(0, 0, 0, 0.1);
     --color-header: #003860;
     --color-tag:  #ceedfc;
@@ -36,10 +36,10 @@ to screen readers*/
 
 /* Dark Mode- To be turned on only when the user selects dark mode*/
 body.dark-theme {
-    --color-background: #121212; /* Dark Gray/Black */
-    --color-text: #EAEAEA;       /* Off-White */
-    --color-primary: #4DAFFF;    /* Lighter Blue */
-    --color-card-bg: #1F1F1F;    /* Darker background for cards (like in your image) */
+    --color-background: #121212; 
+    --color-text: #EAEAEA;       
+    --color-primary: #4DAFFF;    
+    --color-card-bg: #1F1F1F;    
     --color-shadow: rgba(255, 255, 255, 0.1);
     --color-header: #000000;
     --color-tag: #000000;
@@ -48,7 +48,7 @@ body.dark-theme {
 body {
     background-color: var(--color-background);
     color: var(--color-text);
-    transition: background-color 0.3s, color 0.3s; /* B. CSS & Responsiveness: Tasteful transition */
+    transition: background-color 0.3s, color 0.3s; 
     font-family: 'Roboto', 'Inter', 'Helvetica Neue', sans-serif;
 }
 
@@ -100,16 +100,22 @@ header {
     border-radius: 15px;
 }
 
-article > span {
-    display: inline-block;
-    width: fit-content;
-    background-color: var(--color-tag);
-    border-radius: 15px;
-    padding: 6px 10px;
-    margin-right: 6px;
-    margin-bottom: 6px;
-    color: var(--color-tag-text)
+.event-card [data-tags] {
+display: block;
+margin-top: 6px;
 }
+
+.event-card [data-tags] span {
+display: inline-block;
+width: fit-content;
+background-color: var(--color-tag);
+border-radius: 15px;
+padding: 6px 10px;
+margin-right: 6px;
+margin-bottom: 6px;
+color: var(--color-tag-text);
+}
+
 
 .alu-logo{
     display: none;
@@ -188,6 +194,12 @@ footer {
     justify-content: flex-start;
 }
 
+#cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 
 /*Media Query for the Tablet Screen*/
 @media (min-width: 768px) {
@@ -243,30 +255,30 @@ footer {
 
 /*Media Query for Laptop Screens*/
 @media (min-width: 1024px) {
-    main {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
 
-    .event-card {
-        width: 310px;
-        height: 250px;
-        margin-bottom: 50px;
-        flex-shrink: 1;
-        position: relative;
-        box-shadow:0 0 0.1 10px #c6c6c6;
-    }
-    .nav-icon{
-        height: 35px;
-        width: 35px;
-        margin-top: 20px;
-    }
+  .card-box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
-    .actions {
-        position: absolute;
-        bottom: 0px;
-        margin-bottom: 10px;
-    }
+  .event-card {
+    width: 310px;
+    height: 250px;
+    margin-bottom: 50px;
+    position: relative;
+    box-shadow: 0 0 0.1 10px #c6c6c6;
+  }
 
+  .actions {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+  }
+
+  .nav-icon {
+    height: 35px;
+    width: 35px;
+    margin-top: 20px;
+  }
 }
