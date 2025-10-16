@@ -175,16 +175,22 @@ header {
         height: 50px;
         width: 50px;
         margin-top: 30px;
-    }
+        margin-left: auto;
+        margin-right: auto;
+        }
 
-    img.nav-icon {
-        display: flex;
-        justify-content: flex-end;
-    }
+        .dashboard {
+        margin: 0;
+        }
 
-    footer > p {
+        img.nav-icon {
+        display: block;
+        margin: 20px auto;
+        }
+
+        footer > p {
         display: flex;
-        align-content: center;
+        align-items: center;
         justify-content: center;
         padding: 40px;
     }

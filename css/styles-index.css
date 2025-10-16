@@ -50,6 +50,7 @@ body {
     color: var(--color-text);
     transition: background-color 0.3s, color 0.3s; 
     font-family: 'Roboto', 'Inter', 'Helvetica Neue', sans-serif;
+    padding-bottom: 70px;
 }
 
 header {
@@ -86,16 +87,19 @@ header {
     z-index: 10;
 }
 
+
 .event-card {
     background-color: var(--color-card-bg);
     box-shadow: 0 2px 5px var(--color-shadow);
     height: fit-content;
-    width: auto;
+    width: 350px;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
     margin: 10 px;
+    margin-left: 15px;
+    margin-bottom: 20px;
     border: 15px;
     border-radius: 15px;
 }
@@ -139,6 +143,10 @@ color: var(--color-tag-text);
     margin: 0;
 
 } 
+
+ li {
+    wid;
+}
 
 
 .add-event { /*This is the add event button*/
@@ -233,8 +241,9 @@ footer {
         display: block;
     }
     
-    .li-remove {
-        display: none; /*To remove the add event button*/
+    .add {
+        margin-top: 30px;
+        display: block; /*To remove the add event button*/
     }
 
        .nav-icon {
@@ -281,4 +290,6 @@ footer {
     width: 35px;
     margin-top: 20px;
   }
+
+
 }
