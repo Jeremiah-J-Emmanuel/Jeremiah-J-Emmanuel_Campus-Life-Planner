@@ -1,0 +1,213 @@
+/*Light Mode- Default */
+:root {
+    --color-background: #F0F0F5;
+    --color-text: #060606;       /* Dark Gray/Black */
+    --color-primary: #007AFF;    /* Blue for accents/buttons */
+    --color-card-bg: #FFFFFF;    /* Light Gray for cards */
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-header: #003860;
+    --color-tag:  #ceedfc;
+    --color-tag-text: #0a48b3;
+    --color-nav-bar: #e7e7e7;
+    --color-footer: #FFFFFF;
+    --color-edit-button: #dadada;
+     --color: #87bad3;
+}
+
+/* Dark Mode- To be turned on only when the user selects dark mode*/
+.darkmode {
+    --color-background: #121212; /* Dark Gray/Black */
+    --color-text: #EAEAEA;       /* Off-White */
+    --color-primary: #4DAFFF;    /* Lighter Blue */
+    --color-card-bg: #2b2b2b;    /* Darker background for cards (like in your image) */
+    --color-shadow: rgba(255, 255, 255, 0.1);
+    --color-header: #0e2d43;
+    --color-tag: #0e2843;
+}
+
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: 'Roboto', 'Inter', 'Helvetica Neue', sans-serif;
+    padding-bottom: 60px;
+}
+
+
+header {
+    display: flex;
+    background-color: var(--color-header);
+    height: 75px;
+    font-size: larger;
+    color: #FFFFFF;
+    justify-content: flex-start;
+    padding-left: 60px;
+    padding-bottom: 10px;
+}
+
+
+.card {
+    background-color: var(--color-card-bg);
+    border-radius: 20px;
+    box-shadow: #afafaf 0px 4px 6px -1px, #bebebe 0px 2px 4px -1px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    margin-top: 15px;
+}
+
+#time-tracker {
+    height: 350px;
+}
+
+article > strong{
+    padding-left: 10px;
+}
+
+#time-per-tag {
+    height: 250px;
+}
+
+#time-percentage {
+    margin-bottom: 30px;
+}
+
+#donut-time-percentage {
+    /*This is the canvas item for the donut chart chart.*/
+    margin-top: 20px;
+}
+
+alu-logo{
+    display: none;
+}
+.navbar{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    list-style-type: none;
+    background-color: var(--color-nav-bar);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    margin: 0;
+
+} 
+
+.add-event { /*This is the add event button*/
+    /*The container is made a flex container to enable centralization of the icon*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #0a48b3;
+    border-width: 4px;
+    font-size: 25px;
+    height: 50px;
+    width: 50px;
+    font-size: 40px;
+    background-color: #33b58c;
+    color: #FFFFFF;
+}
+footer {
+    background-color: var(--color-footer);
+    text-align: center;
+    padding-bottom: 10px;
+
+}
+
+
+
+
+@media (min-width: 768px) { /*For Tablets*/
+    .navbar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 90px;
+        height: 100vh; /*This is the viewport's height*/
+        border-radius: 0;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    main, header, footer {
+        margin-left: 90px;
+        width: auto;
+        padding: 10px;
+    }
+
+    .alu-logo{
+        margin-top: 30px;
+        display: block;
+    }
+     
+    .li-remove {
+        display: none;
+    }
+
+       .nav-icon {
+        height: 50px;
+        width: 50px;
+        margin-top: 30px;
+    }
+
+    footer {
+        margin: 0;
+    }
+
+    figcaption {
+        color: #000000;
+    }
+}
+
+
+@media (min-width: 1024px) { /*For Laptop Screens*/
+
+    main {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas: 
+        "tracker side-top"
+        "tracker side-bottom";
+        gap: 30px;
+        width: vw;
+
+    }
+
+    #time-tracker {
+        grid-area: tracker;
+        height: 400px;
+    }
+
+    #time-percentage {
+        grid-area: side-top;
+        width: 300px;
+        height: 180px;
+
+    }
+
+    #time-per-tag {
+        grid-area: side-bottom;
+        width: 300px;
+        height: 180px;
+    }
+
+    #time-percentage, #time-per-tag {
+        margin-top: 0px;
+    }
+
+    .nav-icon {
+        height: 35px;
+        width: 35px;
+        margin-top: 20px;
+    }
+
+
+}

@@ -64,8 +64,9 @@ header {
 
 #search-form > div {
     display: flex;
-    width: 95vw; /*This is 95% of the viewport's width*/
+    width: 93vw; /*This is 95% of the viewport's width*/
     position: relative;
+    padding-right: 20px;
 }
 #search-bar {
     height: 40px;
@@ -80,7 +81,7 @@ header {
     position: absolute;
     height: 20px;
     width: 20px;
-    right: 15px;
+    right: 35px;
     padding-top: 10px;
     z-index: 10;
 }
@@ -133,6 +134,7 @@ article > span {
 
 } 
 
+
 .add-event { /*This is the add event button*/
     /*The container is made a flex container to enable centralization of the icon*/
     display: flex;
@@ -141,7 +143,7 @@ article > span {
     border-radius: 50%;
     border-style: solid;
     border-color: #0a48b3;
-    border-width: 3px;
+    border-width: 4px;
     font-size: 25px;
     height: 50px;
     width: 50px;
@@ -240,23 +242,31 @@ footer {
 
 
 /*Media Query for Laptop Screens*/
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     main {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-
     }
 
     .event-card {
         width: 310px;
         height: 250px;
         margin-bottom: 50px;
+        flex-shrink: 1;
+        position: relative;
+        box-shadow:0 0 0.1 10px #c6c6c6;
     }
     .nav-icon{
         height: 35px;
         width: 35px;
         margin-top: 20px;
+    }
+
+    .actions {
+        position: absolute;
+        bottom: 0px;
+        margin-bottom: 10px;
     }
 
 }
