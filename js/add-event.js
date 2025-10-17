@@ -5,9 +5,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const addSection = document.getElementById('add-event-section');
   const addForm = document.getElementById('add-event-form');
   const cancelBtn = document.getElementById('cancel-add');
-  function loadEvents() { try { return JSON.parse(localStorage.getItem(EVENTS_KEY)) || []; } catch { return []; } }
+
+  function loadEvents() { try { return JSON.parse(localStorage.getItem(EVENTS_KEY)) || []; }
+      catch { return []; } }
+
   function saveEvents(v) { localStorage.setItem(EVENTS_KEY, JSON.stringify(v)); }
-  function loadSettings() { try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; } catch { return {}; } }
+
+  function loadSettings() { try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; }
+  catch { return {}; } }
+  
   addBtn?.addEventListener('click', function () { addSection.hidden = false; });
   cancelBtn?.addEventListener('click', function () { addSection.hidden = true; addForm.reset(); });
   addForm?.addEventListener('submit', e => {
