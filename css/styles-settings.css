@@ -469,4 +469,11 @@ main {
     padding-bottom: 20px;
 }
 
+button {
+    background-color: #234580;
+    color: #FFFFFF;
+    height: 30px;
+    border-radius: 10px;
+    margin: 5px;
+}
 

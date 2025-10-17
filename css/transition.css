@@ -1,0 +1,18 @@
+main {
+    animation: transitionIn 1.0s; /*This means it takes 0.75 seconds to go
+    from the  "from" to the "to"*/
+}
+
+@keyframes transitionIn {
+    /*The idea behind this is that, when the page is loaded, it will go from the
+    values specified in  from  to the values specified in to*/
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

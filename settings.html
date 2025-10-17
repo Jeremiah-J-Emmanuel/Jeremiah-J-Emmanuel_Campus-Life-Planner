@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css/styles-settings.css" rel="stylesheet">
+    <link href="./css/transition.css" rel="stylesheet">
     <script src="./js/settings.js" defer></script>
+    <script src="./js/import-export.js" defer></script>
 </head>
 
 
@@ -25,7 +27,16 @@
 
 
                 <button type="submit">Update</button>
-                <button type="button" id="cancel-add">Cancel</button><br><br>
+                <button type="button" id="cancel-add">Cancel</button><br><br><hr><br>
+
+                <div class="import-and-export">
+                    <h3>Data Management </h3>
+                    <button id="export-json">Export Events</button>
+                    <input type="file" id="import-json" accept=".json" hidden>
+                    <button id="import-btn"> Import JSON </button>
+                    <p id="import-status" role="status" aria-live="polite"></p>
+                </div>
+
             </form>
             </article>
     </main>
