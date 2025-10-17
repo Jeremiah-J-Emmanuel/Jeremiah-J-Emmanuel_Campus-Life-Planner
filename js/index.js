@@ -1,4 +1,3 @@
-// Export the render functions for use in other files
 export function escapeHTML(s) {
   return String(s)
     .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
@@ -40,6 +39,22 @@ export function renderListWithHighlight(list, cardsEl, template) {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
+    /*The function below is used to display to you the starting messages
+    If the messages are not in the local storage, it means that it's probably
+    your first time of entering the web page, or you cleared your local storagey.
+    If they are not in the local storage, youy will get an alert message*/
+
+    window.onload = function() {
+    // Check if the 'alerted' item exists in local storage
+    if (localStorage.getItem('alerted') !== 'yes') {
+    alert(`Welcome to Jeremiah's campus planner.\n
+    The default number of hours you have for events in a week is 10 hours, which is 600 minutes\n
+    To change this, go to the settings page. Thank you`);
+
+    // And set the 'alerted' item in local storage
+    localStorage.setItem('alerted', 'yes');
+    }
+    };
   document.querySelector('#search-form')?.addEventListener('submit', e => e.preventDefault());
 
   const STORAGE_KEY = 'campus:events';
