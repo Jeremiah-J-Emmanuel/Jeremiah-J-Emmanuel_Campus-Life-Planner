@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
   const KEY = 'campus:settings';
   const form = document.getElementById('settings-form');
   const nameEl = document.getElementById('user-name');
@@ -16,5 +16,5 @@ document.addEventListener('DOMContentLoaded', () => {
     save({ displayName, weeklyCapMinutes: Math.round(hours * 60) });
     alert('Settings saved');
   });
-  document.getElementById('cancel-add')?.addEventListener('click', () => { window.location.href = 'index.html'; });
+  document.getElementById('cancel-add')?.addEventListener('click', function () { window.location.href = 'index.html'; });
 });

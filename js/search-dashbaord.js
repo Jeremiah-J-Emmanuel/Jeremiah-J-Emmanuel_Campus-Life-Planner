@@ -1,11 +1,10 @@
-
-document.addEventListener('DOMContentLoaded', async () => {
-  // ---- prevent page reload on Enter in search form
+document.addEventListener('DOMContentLoaded', async function () {
+    // The above prevents athe page from submitting like a regular form would.
   document.querySelector('#search-form')?.addEventListener('submit', e => e.preventDefault());
 
   const STORAGE_KEY = 'campus:events';
 
-  // ---- DOM refs + guards
+
   const cardsEl   = document.querySelector('#cards');
   const template  = document.querySelector('#card-temp');
   const searchEl  = document.querySelector('#search-bar');
@@ -16,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!cardsEl)  { console.error('Missing #cards container'); return; }
   if (!template) { console.error('Missing #card-temp <template>'); return; }
 
-  // ---- data load (localStorage → seed.json fallback)
+  
   async function loadRecords() {
     let data = [];
     try { data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { data = []; }
@@ -32,8 +31,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     return data;
   }
-
-  // ---- regex + highlight helpers
   function compileRegex(input, flags = 'i') { try { return input ? new RegExp(input, flags) : null; } catch { return null; } }
   function escapeHTML(s) {
     return String(s)
@@ -75,10 +72,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         (rec.tags || []).forEach(tag => {
           const span = document.createElement('span');
-          span.innerHTML = highlightSafe(`#${tag}`, currentRegex);
+          span.innerHTML = highlightSafe(`#${tag}`, currentRegex); //This is to highlight the cards that meet the users search input
           gEl.appendChild(span);
           gEl.append(' ');
-        });
+        }); 
 
         art.dataset.id = rec.id;
         frag.appendChild(art);
@@ -93,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const master = await loadRecords();
   let currentRegex = null;
 
-  // ---- search + sort
+
   function applyQueryAndSort() {
     const q     = searchEl?.value?.trim() || '';
     const flags = ciEl?.checked ? 'ig' : 'g';
@@ -140,10 +137,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   ciEl?.addEventListener('change', applyQueryAndSort);
   sortEl?.addEventListener('change', applyQueryAndSort);
 
-  // ---- initial paint
   applyQueryAndSort();
 
-  // ---- card button demo handlers
   cardsEl.addEventListener('click', (e) => {
     const card = e.target.closest('.event-card');
     if (!card) return;

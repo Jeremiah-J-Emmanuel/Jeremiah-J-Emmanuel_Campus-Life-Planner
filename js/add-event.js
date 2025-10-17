@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
   const EVENTS_KEY = 'campus:events';
   const SETTINGS_KEY = 'campus:settings';
   const addBtn = document.querySelector('.add-event');
@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function loadEvents() { try { return JSON.parse(localStorage.getItem(EVENTS_KEY)) || []; } catch { return []; } }
   function saveEvents(v) { localStorage.setItem(EVENTS_KEY, JSON.stringify(v)); }
   function loadSettings() { try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; } catch { return {}; } }
-  addBtn?.addEventListener('click', () => { addSection.hidden = false; });
-  cancelBtn?.addEventListener('click', () => { addSection.hidden = true; addForm.reset(); });
+  addBtn?.addEventListener('click', function () { addSection.hidden = false; });
+  cancelBtn?.addEventListener('click', function () { addSection.hidden = true; addForm.reset(); });
   addForm?.addEventListener('submit', e => {
     e.preventDefault();
     const title = document.getElementById('new-title').value.trim();

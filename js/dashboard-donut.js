@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
   const EVENTS_KEY = 'campus:events';
   const SETTINGS_KEY = 'campus:settings';
   function loadEvents() { try { return JSON.parse(localStorage.getItem(EVENTS_KEY)) || []; } catch { return []; } }
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     data: { labels: ['Used', 'Remaining'], datasets: [{ data: [base.usedHours, base.remainingHours], backgroundColor: ['#3c4f6bff', '#55b1bdff'], borderColor: ['#aec4e6ff', '#c5d8daff'], borderWidth: 1 }] },
     options: { responsive: true, legend: { position: 'top' }, title: { display: true, text: 'Percentage of Time Used (Weekly Cap)' }, cutoutPercentage: 70 }
   });
-  document.addEventListener('events:updated', () => {
+  document.addEventListener('events:updated', function () {
     const s2 = loadSettings();
     const next = compute(s2.weeklyCapMinutes);
     chartRef.data.datasets[0].data = [next.usedHours, next.remainingHours];
