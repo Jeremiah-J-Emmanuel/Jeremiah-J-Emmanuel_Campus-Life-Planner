@@ -247,6 +247,11 @@ footer {
         justify-content: flex-start;
 
     }
+.event-card {
+    width: 700px;
+    padding-left: 30px;
+}
+
 
     figcaption {
     display: block;
