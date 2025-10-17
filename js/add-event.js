@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   cancelBtn?.addEventListener('click', function () { addSection.hidden = true; addForm.reset(); });
   addForm?.addEventListener('submit', e => {
     e.preventDefault();
+    
     const title = document.getElementById('new-title').value.trim();
     const dueDate = document.getElementById('new-date').value;
     const duration = parseInt(document.getElementById('new-duration').value, 10);

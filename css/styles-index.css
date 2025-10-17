@@ -247,11 +247,20 @@ footer {
         justify-content: flex-start;
 
     }
-.event-card {
+    .event-card {
     width: 700px;
     padding-left: 30px;
 }
 
+#search-bar {
+    width: 90%;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    right: 120px;
+}
 
     figcaption {
     display: block;
@@ -312,6 +321,16 @@ footer {
     position: relative;
     box-shadow: 0 0 0.1 10px #c6c6c6;
   }
+
+  #search-bar {
+    width: 78%;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    right: 350px;
+}
 
   .actions {
     position: absolute;

@@ -124,11 +124,137 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   applyQueryAndSort();
 
+
+  function readAll() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function writeAll(arr) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  }
+
+  // turn the string of tags into a listThe 
+  function splitTags(str) {
+    return String(str || '')
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+
+  // remove record
+  function handleDelete(id) {
+    if (!confirm('Are you sure you want to delete this event?')) return;
+
+    const data = readAll().filter(r => r.id !== id);
+    writeAll(data);
+
+    const idx = master.findIndex(r => r.id === id);
+    if (idx !== -1) master.splice(idx, 1);
+
+    applyQueryAndSort();
+  }
+
+  // show form on card
+  function enterEditMode(id) {
+    const rec = master.find(r => r.id === id);
+    if (!rec) return;
+
+    const card = document.querySelector(`.event-card[data-id="${CSS.escape(id)}"]`);
+    if (!card) return;
+
+    const form = document.createElement('form');
+    form.className = 'edit-form';
+    form.innerHTML = `
+      <h3>
+        <input name="title" type="text" value="${escapeHTML(rec.title || '')}">
+      </h3>
+
+      <p><strong>Due</strong>:
+        <input name="dueDate" type="date" value="${escapeHTML(rec.dueDate || '')}">
+      </p>
+
+      <p><strong>Duration</strong>:
+        <input name="duration" type="number" min="0" step="1" value="${escapeHTML(String(rec.duration ?? 0))}"> mins
+      </p>
+
+      <p><strong>Tags</strong>:
+        <input name="tags" type="text" value="${escapeHTML((rec.tags || []).join(', '))}">
+      </p>
+
+      <div class="actions">
+        <button type="submit" class="save">Save</button>
+        <button type="button" class="cancel">Cancel</button>
+      </div>
+    `;
+
+    const shell = document.createElement('article');
+    shell.className = 'event-card';
+    shell.dataset.id = id;
+    shell.appendChild(form);
+
+    card.replaceWith(shell);
+
+    form.querySelector('input[name="title"]')?.focus();
+  }
+
+  // put card back
+  function exitEditMode(id) {
+    applyQueryAndSort();
+  }
+
+  // save changes
+  function handleEditSubmit(formEl) {
+    const wrapper = formEl.closest('.event-card');
+    if (!wrapper) return;
+    const id = wrapper.dataset.id;
+
+    const title    = formEl.elements.title.value.trim();
+    const dueDate  = formEl.elements.dueDate.value.trim();
+    const duration = Number(formEl.elements.duration.value);
+    const tags     = splitTags(formEl.elements.tags.value);
+
+    const idx = master.findIndex(r => r.id === id);
+    if (idx === -1) return;
+
+    master[idx] = {
+      ...master[idx],
+      title,
+      dueDate,
+      duration: Number.isFinite(duration) ? duration : 0,
+      tags,
+      updatedAt: new Date().toISOString()
+    };
+
+    writeAll(master);
+    applyQueryAndSort();
+  }
+
+  // clicks on edit/delete/cancel
   cardsEl.addEventListener('click', e => {
     const card = e.target.closest('.event-card');
     if (!card) return;
     const id = card.dataset.id;
-    if (e.target.closest('.edit')) console.log('Edit', id);
-    if (e.target.closest('.delete')) console.log('Delete', id);
+
+    if (e.target.closest('.edit')) {
+      enterEditMode(id);
+      return;
+    }
+    if (e.target.closest('.delete')) {
+      handleDelete(id);
+      return;
+    }
+    if (e.target.closest('.cancel')) {
+      exitEditMode(id);
+      return;
+    }
+  });
+
+  // submit edit form
+  cardsEl.addEventListener('submit', e => {
+    const form = e.target.closest('.edit-form');
+    if (!form) return;
+    e.preventDefault();
+    handleEditSubmit(form);
   });
 });
