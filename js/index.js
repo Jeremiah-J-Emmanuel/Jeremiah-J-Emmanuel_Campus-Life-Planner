@@ -47,8 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     window.onload = function() {
     // Check if the 'alerted' item exists in local storage
     if (localStorage.getItem('alerted') !== 'yes') {
-    alert(`Welcome to Jeremiah's campus planner.
-    The default number of hours you have for events in a week is 10 hours, which is 600 minutes.
+    alert(`Welcome to Jeremiah's campus planner. The default number of hours you have for events in a week is 10 hours, which is 600 minutes.
     To change this, go to the settings page.
     Thank you`);
 
