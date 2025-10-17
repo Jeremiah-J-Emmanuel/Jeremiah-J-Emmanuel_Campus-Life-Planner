@@ -1,3 +1,44 @@
+// Export the render functions for use in other files
+export function escapeHTML(s) {
+  return String(s)
+    .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+    .replaceAll('"','&quot;').replaceAll("'",'&#39;');
+}
+
+export function highlightSafe(text, re) {
+  if (!re) return escapeHTML(text);
+  return escapeHTML(text).replace(re, m => `<mark>${escapeHTML(m)}</mark>`);
+}
+
+export function renderListWithHighlight(list, cardsEl, template) {
+  if (!cardsEl || !template) return;
+  cardsEl.innerHTML = '';
+  const frag = document.createDocumentFragment();
+
+  list.forEach(rec => {
+    const node = template.content.cloneNode(true);
+    const tEl = node.querySelector('[data-title]');
+    const dEl = node.querySelector('[data-due]');
+    const uEl = node.querySelector('[data-duration]');
+    const gEl = node.querySelector('[data-tags]');
+    const art = node.querySelector('.event-card');
+    if (!tEl || !dEl || !uEl || !gEl || !art) return;
+
+    tEl.innerHTML = highlightSafe(rec.title || '', null);
+    dEl.textContent = rec.dueDate || '';
+    uEl.textContent = rec.duration ?? '';
+    (rec.tags || []).forEach(tag => {
+      const span = document.createElement('span');
+      span.innerHTML = highlightSafe(`#${tag}`, null);
+      gEl.appendChild(span);
+      gEl.append(' ');
+    });
+    art.dataset.id = rec.id;
+    frag.appendChild(art);
+  });
+  cardsEl.appendChild(frag);
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
   document.querySelector('#search-form')?.addEventListener('submit', e => e.preventDefault());
 
@@ -155,7 +196,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     applyQueryAndSort();
   }
 
-  // show form on card
+  // This function transforms the event card into a form that allows you to edit it
   function enterEditMode(id) {
     const rec = master.find(r => r.id === id);
     if (!rec) return;
@@ -230,7 +271,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     applyQueryAndSort();
   }
 
-  // clicks on edit/delete/cancel
+  // When the user clicks on edit/delete/cancel
   cardsEl.addEventListener('click', e => {
     const card = e.target.closest('.event-card');
     if (!card) return;

@@ -92,15 +92,65 @@ High-contrast and screen-reader-friendly elements
 
 🧩 Tech Stack
 Layer	Technology
-Frontend	HTML5, CSS3, JavaScript (ES6)
-Charts	Chart.js 2.9.4
-Storage	localStorage
-Validation & Search	Regular Expressions (Regex)
-Accessibility	ARIA roles, semantic HTML, visible focus styles
-🧮 Data Model
+# Campus Life Planner — Summative Project
 
-Each record follows the structure:
+This repository contains the Campus Life Planner: a responsive, accessible, vanilla HTML/CSS/JS app for tracking tasks/events with durations, tags, search, and simple stats. It’s built to meet the "Building Responsive UI" summative brief.
 
+## Table of contents
+- Overview
+- Quick start
+- Features
+- Data model & persistence
+- Regex catalog & examples
+- Keyboard map
+- Accessibility notes
+- Tests & seed data
+- Deployment
+- Milestones & mapping to the rubric
+- Contact / author
+
+## Overview
+The Campus Life Planner helps students plan and track events (tasks, study sessions, meetings) with durations and tags. Core principles:
+- Mobile-first responsive layout (Flexbox + media queries)
+- Semantic HTML and accessible interactions (ARIA, roles, keyboard support)
+- Modular, minimal JavaScript (ES modules)
+- Persistence via localStorage and JSON import/export
+- Safe regex-based search and validation with inline feedback
+
+## Quick start
+This project uses ES modules; serve the files via a local static server (recommended) and open `index.html` in your browser.
+
+Using Python (cross-platform):
+
+```powershell
+# from the project root
+python -m http.server 8000
+# then open http://localhost:8000 in your browser
+```
+
+Or using Node (if installed):
+
+```powershell
+npx http-server -p 8000
+# then open http://localhost:8000
+```
+
+You can also use VS Code Live Server extension.
+
+## Features
+- Add / edit / delete events
+- Title, due date, duration (minutes), tags for each record
+- Cards view (mobile) and richer layout on larger screens
+- Live regex search (safe compiler + case-insensitive toggle)
+- Sorting by date, title, and duration
+- Import / export JSON with validation
+- Settings page for units and weekly cap (default cap: 600 minutes / 10 hours)
+- Dashboard with totals, sum of durations, top tag, and a simple last-7-days trend
+- Inline edit mode and delete confirmation
+
+## Data model
+Each record contains:
+```json
 {
   "id": "task_001",
   "title": "AI & Ethics Seminar",
@@ -110,104 +160,113 @@ Each record follows the structure:
   "createdAt": "2025-10-01T12:00:00Z",
   "updatedAt": "2025-10-05T10:30:00Z"
 }
+```
+All data is auto-saved to localStorage using the key `campus:events`. The settings are stored under `campus:settings`.
 
+## Default weekly cap
+If no setting is provided, the weekly cap defaults to **600 minutes (10 hours)**. This value prevents adding events that would exceed the weekly allotment.
 
-Stored under:
+## Regex catalog (validation + search)
+This project implements at least four validation rules plus at least one advanced regex. Use the patterns below in the app's validators and search utilities.
 
-localStorage['campus:events']
+1. Title / Description
+- Pattern: ^\\S(?:.*\\S)?$
+- Purpose: forbids leading/trailing spaces and allows non-empty content
+- Example: `"Lunch"` matches; `" leading"` does not.
 
-🧠 Regex Catalog
-Field	Pattern	Purpose
-Title / Description	/^\S(?:.*\S)?$/	Disallow leading/trailing spaces
-Duration (Minutes)	`/^(0	[1-9]\d*)$/`
-Date	`/^\d{4}-(0[1-9]	1[0-2])-(0[1-9]
-Tags	/^[A-Za-z]+(?:[ -][A-Za-z]+)*$/	Letters, spaces, and hyphens
-Duplicate Word Detector	/\b(\w+)\s+\1\b/	Advanced back-reference example
-Tag Search	/^@tag:\w+/	Filter by a specific tag
-Case-Insensitive Search Toggle	User can toggle i flag in UI	
-♿ Accessibility (a11y)
+2. Numeric (duration/pages/amount)
+- Pattern: ^(0|[1-9]\\d*)(\\.\\d{1,2})?$
+- Purpose: integer or decimal with up to 2 decimal places; forbids leading zeros except 0
+- Example: `90`, `0`, `12.5`, `12.50` match; `01` does not.
 
-Semantic HTML5 structure (header, main, footer, nav, form)
+3. Date (YYYY-MM-DD)
+- Pattern: ^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$
+- Purpose: Strict ISO date format
+- Example: `2025-10-17` matches; `17-10-2025` does not.
 
-Keyboard focus indicators on all inputs/buttons
+4. Category / Tag
+- Pattern: /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/
+- Purpose: Letters, spaces or hyphens between words; no leading/trailing separators
+- Example: `Group-Study`, `Self Study` match; `-bad` does not.
 
-aria-live="polite" region announces search results
+5. Advanced / Safety checks (used for search and extra validations)
+- Duplicate-word detection (back-reference): /\\b(\\w+)\\s+\\1\\b/
+  - Finds repeated words like "the the"; use for warning users about typos.
+- Search prefix for tag filtering: ^@tag:([A-Za-z0-9-]+)
+  - Example: `@tag:study` filters to records with the `study` tag.
 
-Screen-reader-only (sr-only) labels for hidden form text
+### Safe search compilation
+The search input is compiled with a small helper that wraps `new RegExp(...)` in try/catch and returns `null` for invalid patterns. This prevents the UI from crashing on malformed regex.
 
-Works properly without a mouse
+## How search highlighting works
+- Search input compiles to a safe RegExp (with optional 'i' flag for case-insensitive).
+- Matches are wrapped in `<mark>` elements using text-safe escaping.
+- The code ensures the markup does not break accessibility (no nested interactive elements inside marks).
 
-⌨️ Keyboard Map
-Key	Action
-Tab / Shift + Tab	Navigate through interactive elements
-Enter	Activate focused button (edit, delete, etc.)
-Esc	Exit edit mode or cancel actions
-↑ / ↓	Navigate options in dropdowns
-Ctrl + F / ⌘ + F	Focus the search bar
-⚙️ Setup Guide
+## Keyboard map (common shortcuts)
+- Tab / Shift+Tab: navigate focusable elements (forms, buttons, search)
+- Enter: submit focused form or activate focused button
+- `/` (slash) focuses the search bar (optional helper in-app)
+- `+` or `a` when focused on main navigation: open Add new event (the `+` button)
+- Arrow keys (↑ ↓): move between cards in list focus mode (if implemented)
+- Escape: exit inline edit mode or close modals
 
-Clone or Download
+Add a note in the UI (or README) if you provide any extra shortcuts.
 
-git clone https://github.com/<your-username>/campus-life-planner.git
-cd campus-life-planner
+## Accessibility (a11y) notes
+- Semantic landmarks used: `header`, `nav`, `main`, `section`, `footer`.
+- Labels are bound to inputs; form controls have required attributes where appropriate.
+- Visible focus styles are included.
+- Status messages and search errors are announced via a role="status" / `aria-live="polite"` element.
+- Delete actions require confirmation and are exposed to screen readers via appropriate aria-labels.
+- Keyboard-only navigation is supported for core flows: add, edit, delete, search.
 
+## Tests & seed data
+- `seed.json` contains starter records (≥10) used when no data exists in localStorage.
+- There is a `tests.html` (if present) with small assertions for validators (validation rules) and the safe regex compiler.
 
-Run Locally
+To reset app data for testing, open the browser devtools and run:
 
-Open index.html in your browser.
+```javascript
+localStorage.removeItem('campus:events');
+localStorage.removeItem('campus:settings');
+location.reload();
+```
 
-All data loads from seed.json initially.
+## Import / Export JSON
+- Export: clicks a button to download a validated JSON file of current records.
+- Import: uploads a JSON file; the structure is validated against the expected schema before writing to localStorage. Invalid files are rejected with an accessible error.
 
-After you add events, they persist in localStorage.
+## Units & Settings
+- Default unit: minutes (duration). Settings allow converting minutes ↔ hours in the UI for display.
+- Weekly cap: default 600 minutes; users can change this in Settings. The Dashboard shows remaining minutes and announces via aria-live whether the user is within or over the cap.
 
-Project Structure
+## Deployment
+This project can be deployed to GitHub Pages. Add your GitHub repo URL and the GitHub Pages link here after deployment.
 
-├── index.html
-├── dashboard.html
-├── settings.html
-├── about.html
-├── js/
-│   ├── index.js
-│   ├── dashboard.js
-│   ├── add-event.js
-├── css/
-│   ├── styles-index.css
-│   ├── styles-dashboard.css
-│   ├── styles-settings.css
-├── seed.json
+Checklist before submission:
+- [ ] Add a 2–3 minute demo video (unlisted) showing keyboard navigation, search edge cases, import/export, and responsiveness
+- [ ] Confirm `seed.json` has ≥10 diverse records
+- [ ] Verify `tests.html` and validators
+- [ ] Add GitHub Pages URL below and push repository
 
-🧪 Testing Instructions
+## Milestones & rubric mapping
+- M1 Spec & Wireframes (10%): design rationale and accessibility plan
+- M2 Semantic HTML & Base CSS (10%): mobile-first layout and media queries
+- M3 Forms & Regex Validation (15%): 4+ validators and tests
+- M4 Render + Sort + Regex Search (20%): rendering, sortable columns, highlight
+- M5 Stats + Cap/Targets (15%): dashboard and cap logic with aria-live
+- M6 Persistence + Import/Export + Settings (15%): localStorage and JSON roundtrip
+- M7 Polish & A11y Audit (15%): keyboard pass, animation, README and demo video
 
-Add new events and confirm they persist after refresh.
-
-Test invalid regex patterns in the search bar (they should show “Invalid pattern”).
-
-Try @tag:Workshop search format to filter events by tag.
-
-Check case sensitivity toggle.
-
-Modify weekly cap in Settings and verify the Dashboard donut chart updates correctly.
-
-🚀 Deployment
-
-Hosted via GitHub Pages
-
-👉 Live Demo Link
-
-To deploy:
-
-Push your code to the main branch of your GitHub repo.
-
-Go to Settings → Pages.
-
-Under “Branch,” select main / (root).
-
-Wait for GitHub Pages to publish your site.
-
-🙌 Credits
-
+## Contact
 Author: Jeremiah Jewel Emmanuel
-Institution: African Leadership University, Rwanda
-Course: Software Engineering
-Instructor: [Your Instructor’s Name or Course Code]
-Year: 2025
+Email: (add your email)
+GitHub: (add your GitHub profile URL)
+
+---
+
+If you want, I can also:
+- Generate a small `README`-friendly demo script for the 2–3 minute video
+- Produce the regex test cases for `tests.html`
+- Add a short `CONTRIBUTING.md` and `.gitignore` if missing

@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     exportBtn?.addEventListener('click', function () {
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); /* Recieval and parsing of stored campus events*/
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    /* Recieval and parsing of stored campus events*/
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     /*The above code makes use of a conditional, exportBtn?.addEventListener, to help prevent errors
@@ -48,6 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (statusEl) statusEl.textContent = 'Import failed: ' + err.message;
     }
 
-    importFile.value = ''; // reset file input
+    importFile.value = ''; // This is to reset the value of the input, which is the file the user uploaded.
     });
     });

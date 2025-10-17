@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const title = document.getElementById('new-title').value.trim();
     const dueDate = document.getElementById('new-date').value;
     const duration = parseInt(document.getElementById('new-duration').value, 10);
+    const dupWordRe = /(?<!\p{L})(\p{L}+)\s+\1(?!\p{L})/iu;
+    if (dupWordRe.test(title)) {
+      const statusEl = document.querySelector('#search-status') || document.getElementById('add-status');
+      const msg = 'Title contains repeated adjacent words (e.g. "the the"). Please correct.';
+      if (statusEl) statusEl.textContent = msg; else alert(msg);
+      return;
+    }
     const tagsInput = document.getElementById('new-tags').value.trim();
     const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(Boolean) : [];
     if (!title || !dueDate || !Number.isFinite(duration) || duration < 0) return;
@@ -35,6 +42,15 @@ document.addEventListener('DOMContentLoaded', function () {
     saveEvents(events);
     addForm.reset();
     addSection.hidden = true;
-    document.dispatchEvent(new CustomEvent('events:updated', { detail: { events } }));
+
+    // this is to update the display immediately
+    const cardsEl = document.querySelector('#cards');
+    const template = document.querySelector('#card-temp');
+    if (cardsEl && template) {
+      const filtered = events.filter(rec => true); // Show all events
+      import('./index.js').then(module => {
+        module.renderListWithHighlight(filtered, cardsEl, template);
+      });
+    }
   });
 });
