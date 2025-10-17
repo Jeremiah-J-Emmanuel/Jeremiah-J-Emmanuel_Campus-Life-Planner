@@ -148,6 +148,30 @@ figcaption {
 }
 
 
+#add-event-form {
+    background-color: #FFFFFF;
+    padding: 30px;
+    padding-top: 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+#add-event-form {
+    background-color: #d5d5d5;
+    padding: 30px;
+    padding-top: 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 300px;
+}
+
+#add-event-form > h3 {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+
 .add-event { /*This is the add event button*/
     /*The container is made a flex container to enable centralization of the icon*/
     display: flex;
@@ -221,6 +245,7 @@ footer {
         border-radius: 0;
         flex-direction: column;
         justify-content: flex-start;
+
     }
 
     figcaption {
